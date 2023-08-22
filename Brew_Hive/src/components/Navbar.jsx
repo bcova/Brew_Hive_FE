@@ -39,8 +39,14 @@ function Navbar() {
 
   const handleLogOut = () => {
     sessionStorage.removeItem("Logged_In");
+    sessionStorage.removeItem("Token");
+    sessionStorage.removeItem("User_Info");
     navigate("/");
   }
+
+  const userInfo = sessionStorage.getItem('User_Info')
+const storedObject = JSON.parse(userInfo);
+const username = storedObject.username
 
   
   return (
@@ -58,7 +64,6 @@ function Navbar() {
             }}
               variant="square"
           />
-
           <Box  sx={{ flexGrow: 0, display: { xs: "flex", md: "none" },   }}>
             <IconButton
               size="large"
@@ -85,7 +90,9 @@ function Navbar() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: "block", md: "none",".MuiPaper-root ":{
+                  backgroundColor:'secondary.main'
+                }},
               }}
               
             >
@@ -121,14 +128,14 @@ function Navbar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0,}}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Avatar" src={Selfie} />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: "45px"}}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -144,7 +151,7 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleCloseUserMenu}  >
                 {setting == 'Logout' ?<Button variant="contained" onClick={handleLogOut} textAlign="center">{setting}</Button>: <Button variant="contained" textAlign="center">{setting}</Button>}
                 </MenuItem>
               ))}

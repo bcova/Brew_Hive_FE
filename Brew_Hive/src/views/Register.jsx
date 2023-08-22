@@ -18,7 +18,7 @@ import logo from "../assets/Logo.svg";
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { checkRegisterInputs } from "/src/helpers/input_checkers.jsx";
-import registerUser from "../api/registerUser";
+import registerUser from "../api/users/registerUser";
 export default function Register() {
   const [first_name, setFirst_name] = useState("");
   const [last_name, setLast_name] = useState("");
@@ -76,16 +76,17 @@ export default function Register() {
         username,
       };
       const registering = await registerUser(user);
-      console.log({ registering });
-      if (registering === true) {
+      console.log("registering", registering.token );
+      if (registering.success === true) {
+        sessionStorage.setItem("Logged_In", true);
+        sessionStorage.setItem("Token", registering.token);
+        sessionStorage.setItem("User_id", registering.user_id);
         navigate("/main");
       } else setSignUpError(registering);
     } else {
       return;
     }
   };
-
-
 
 
   return (
@@ -205,7 +206,7 @@ export default function Register() {
                 inputRef={passwordRef}
               />
             </Grid>
-            <Box sx={{ border: 0, p:0, bgcolor: 'transparent',margin:'auto' }}>
+            {/* <Box sx={{ border: 0, p:0, bgcolor: 'transparent',margin:'auto' }}>
         <Box p={0}>
                 <List>
                   <ListItem disableGutters>
@@ -287,7 +288,7 @@ export default function Register() {
                   </ListItem>
                 </List>
               </Box>
-        </Box>
+        </Box> */}
             <Grid item xs={12} ref={containerRef}>
               <TextField
                 required
@@ -327,9 +328,9 @@ export default function Register() {
           >
             Sign Up
           </Button>
-          <Grid container justifyContent="flex-end" bgcolor="green">
-            <Grid bgcolor="blue" >
-              <Link href="/" variant="body2" bgcolor={'red'}>
+          <Grid container justifyContent="flex-end">
+            <Grid  >
+              <Link href="/" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

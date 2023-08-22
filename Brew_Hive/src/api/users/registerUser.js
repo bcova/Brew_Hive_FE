@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 const registerUser = async (user) => {
 
@@ -11,10 +11,10 @@ const registerUser = async (user) => {
         const data = await response.json();
         console.log({response})
         if (response.ok) {
-            return true
+          console.log({data})
+            return data
         } else {
             return data.error
-          
         }
       } catch (error) {
         console.error(error);

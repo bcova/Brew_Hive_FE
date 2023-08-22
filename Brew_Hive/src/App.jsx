@@ -6,7 +6,6 @@ import {
   Route,
   BrowserRouter as Router,
   useLocation ,
-  Outlet,
   Navigate 
 } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,10 +20,13 @@ const theme = createTheme({
       second: "#FEC872",
     },
   },
+  typography: {
+    fontFamily: [
+      'Patua One',
+    ].join(','),
+  },
 });
 function App() {
-
-
 
   return (
     <>
@@ -41,7 +43,7 @@ function App() {
 function AppContent() {
   const location = useLocation();
 
-
+  
   const loggedIn = sessionStorage.getItem("Logged_In")
 
 

@@ -15,8 +15,8 @@ import {
 import logo from "../assets/Logo.svg";
 import { disableSubmit } from "/src/helpers/input_checkers.jsx";
 import { useNavigate } from "react-router-dom";
-import loginUser from "../api/loginUser";
-
+import loginUser from "../api/users/loginUser";
+import getUserByEmail from "../api/users/getUserByEmail";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,9 +28,12 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { isMatch } = await loginUser(email, password);
-      if (isMatch) {
+      const data = await loginUser(email, password);
+      if (data.isMatch) {
         sessionStorage.setItem("Logged_In", true);
+        sessionStorage.setItem("Token", data.token);
+        const user = await getUserByEmail(data.user.email);
+        sessionStorage.setItem("User_Info", JSON.stringify(user));
         navigate("/main");
       }
     } catch (error) {
@@ -51,6 +54,7 @@ export default function Login() {
       };
     }
   }, [loginError]);
+
 
 
   useEffect(() => {
