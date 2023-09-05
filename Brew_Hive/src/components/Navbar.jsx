@@ -44,9 +44,7 @@ function Navbar() {
     navigate("/");
   }
 
-  const userInfo = sessionStorage.getItem('User_Info')
-const storedObject = JSON.parse(userInfo);
-const username = storedObject.username
+
 
   
   return (
@@ -98,7 +96,7 @@ const username = storedObject.username
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography >{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -152,7 +150,7 @@ const username = storedObject.username
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}  >
-                {setting == 'Logout' ?<Button variant="contained" onClick={handleLogOut} textAlign="center">{setting}</Button>: <Button variant="contained" textAlign="center">{setting}</Button>}
+                {setting == 'Logout' ?<Button variant="contained" onClick={handleLogOut} >{setting}</Button>: <Button variant="contained" >{setting}</Button>}
                 </MenuItem>
               ))}
             </Menu>

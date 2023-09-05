@@ -22,6 +22,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const [rememberMe, setRememberMe] = useState(false);
   const containerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -36,11 +37,21 @@ export default function Login() {
         sessionStorage.setItem("User_Info", JSON.stringify(user));
         navigate("/main");
       }
+      if(rememberMe){
+        localStorage.setItem("RememberMe", true);
+        localStorage.setItem("Token", data.token);
+      }
     } catch (error) {
       setLoginError(true)
       console.log("Error:", error.message);
     }
   };
+
+  const handleRememberMe = (e) => {
+    const checked = e.target.checked
+    setRememberMe(checked)
+  }
+
 
   useEffect(() => {
     if (loginError) {
@@ -82,15 +93,15 @@ export default function Login() {
           width: "400px",
         }}
       >
-        <Box position="fixed" top="30px">
-          <img src={logo} width="300px" />
+        <Box position="fixed" top="-50px">
+          <img src={logo} width="350px" />
         </Box>
         <Typography component="h1" variant="h5" ref={containerRef}>
           Sign in
         </Typography>
         {
             <Slide
-              direction="up"
+              direction="right"
               in={loginError}
               mountOnEnter
               unmountOnExit
@@ -135,7 +146,7 @@ export default function Login() {
             }}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value="remember" color="primary" onChange={(e) => handleRememberMe(e) }/>}
             label="Remember me"
           />
           <Button

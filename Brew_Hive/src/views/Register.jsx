@@ -38,11 +38,6 @@ export default function Register() {
   const containerRef = useRef(null);
   const navigate = useNavigate();
 
-  const AT_LEAST_8_CHARS_REGEX = /^.{8,}$/;
-  const UPPERCASE_LETTER_REGEX = /^(?=.*[A-Z]).*$/;
-  const NUMBER_REGEX = /^(?=.*\d).*$/;
-  // eslint-disable-next-line no-useless-escape
-  const SPECIAL_CHARACTER_REGEX = /^(?=.*[~`!@#\$%\^&\*\(\)_\-\+\=\{\[\}\]\|:;"'<,>\.\?\/]).*$/;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,6 +73,7 @@ export default function Register() {
       const registering = await registerUser(user);
       console.log("registering", registering.token );
       if (registering.success === true) {
+        sessionStorage.setItem("User_Info", JSON.stringify(user));
         sessionStorage.setItem("Logged_In", true);
         sessionStorage.setItem("Token", registering.token);
         sessionStorage.setItem("User_id", registering.user_id);
@@ -113,8 +109,8 @@ export default function Register() {
           // top: "50px",
         }}
       >
-        <Box position="fixed" top="40px">
-          <img src={logo} width="200px" />
+        <Box position="fixed" top="-50px">
+          <img src={logo} width="250px"  />
         </Box>
         <Typography component="h1" variant="h5">
           Sign up
